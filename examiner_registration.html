@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examiner Registration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"], input[type="number"], input[type="tel"], input[type="date"], input[type="submit"], select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        .contact-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .contact-group input[type="tel"] {
+            width: 80%;
+        }
+
+        .contact-group button {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .contact-group button:hover {
+            background-color: #e04b29;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .contact-wrapper {
+            margin-top: 20px;
+        }
+
+        .role-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Examiner Registration</h1>
+    <form action="{{ url_for('examiner_registration') }}" method="POST">
+        <div class="form-group">
+            <label for="examiner_id">Examiner ID</label>
+            <input type="text" id="examiner_id" name="examiner_id" required>
+        </div>
+
+        <div class="form-group">
+            <label for="examiner_name">Examiner Name</label>
+            <input type="text" id="examiner_name" name="examiner_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="mentorship_status">Mentorship Status</label>
+            <select id="mentorship_status" name="mentorship_status" required>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="mentorship_start_date">Mentorship Start Date</label>
+            <input type="date" id="mentorship_start_date" name="mentorship_start_date" required>
+        </div>
+
+        <div class="role-group">
+            <label for="examiner_role">Examiner Role</label>
+            <select id="examiner_role" name="examiner_role" required onchange="toggleExperienceFields()">
+                <option value="">Select Role</option>
+                <option value="valuation_examiner">Valuation Examiner</option>
+                <option value="invigilation_examiner">Invigilation Examiner</option>
+            </select>
+        </div>
+
+        <div id="valuation-experience" class="form-group" style="display:none;">
+            <label for="valuation_experience_years">Valuation Experience (Years)</label>
+            <input type="number" id="valuation_experience_years" name="valuation_experience_years" min="0">
+        </div>
+
+        <div id="invigilation-experience" class="form-group" style="display:none;">
+            <label for="invigilation_experience_years">Invigilation Experience (Years)</label>
+            <input type="number" id="invigilation_experience_years" name="invigilation_experience_years" min="0">
+        </div>
+
+        <div class="contact-wrapper">
+            <label>Contact Numbers</label>
+            <div id="contact-container">
+                <div class="contact-group">
+                    <input type="tel" name="contact_no[]" placeholder="Enter contact number" required>
+                    <button type="button" onclick="addContact()">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Register Examiner</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function addContact() {
+        var contactContainer = document.getElementById('contact-container');
+        var newContactGroup = document.createElement('div');
+        newContactGroup.classList.add('contact-group');
+
+        var contactInput = document.createElement('input');
+        contactInput.type = 'tel';
+        contactInput.name = 'contact_no[]';
+        contactInput.placeholder = 'Enter contact number';
+        contactInput.required = true;
+
+        var removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.textContent = '–';
+        removeButton.onclick = function() {
+            contactContainer.removeChild(newContactGroup);
+        };
+
+        newContactGroup.appendChild(contactInput);
+        newContactGroup.appendChild(removeButton);
+
+        contactContainer.appendChild(newContactGroup);
+    }
+
+    function toggleExperienceFields() {
+        var role = document.getElementById('examiner_role').value;
+        var valuationExperienceField = document.getElementById('valuation-experience');
+        var invigilationExperienceField = document.getElementById('invigilation-experience');
+
+        // Hide both experience fields initially
+        valuationExperienceField.style.display = 'none';
+        invigilationExperienceField.style.display = 'none';
+
+        // Show the relevant experience field based on selected role
+        if (role === 'valuation_examiner') {
+            valuationExperienceField.style.display = 'block';
+        } else if (role === 'invigilation_examiner') {
+            invigilationExperienceField.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>

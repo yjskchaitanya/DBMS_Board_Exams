@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Marks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 50px;
+            font-size: 36px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .no-records {
+            text-align: center;
+            color: #ff0000;
+            font-size: 18px;
+        }
+
+        .back-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>View Marks</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="message {% if category == 'success' %}success{% elif category == 'error' %}error{% endif %}">
+                    {% for category, message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if marks %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Roll Number</th>
+                        <th>Subject</th>
+                        <th>Marks Assigned</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mark in marks %}
+                        <tr>
+                            <td>{{ mark.student_roll_number }}</td>
+                            <td>{{ mark.subject }}</td>
+                            <td>{{ mark.marks_assigned }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="no-records">No marks found. Invalid details or no data available.</div>
+        {% endif %}
+
+        <a href="{{ url_for('admin_dashboard') }}" class="back-btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

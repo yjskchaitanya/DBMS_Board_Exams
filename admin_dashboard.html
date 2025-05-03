@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board Exams Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #f8fafc, #dbeafe);
+            color: #333;
+            text-align: center;
+        }
+
+        header {
+            background-color: #1d4ed8;
+            color: white;
+            padding: 20px;
+            font-size: 1.8em;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 30px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            background-color: #1e40af;
+            transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            background-color: #1c4f91;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Board Exams Management System
+    </header>
+    <div class="container">
+        <h2>Welcome to the Admin Dashboard</h2>
+        <p>Choose an action to proceed:</p>
+        <div class="button-container">
+            <a href="{{ url_for('school_registration') }}">
+                <button>School Registration</button>
+            </a>
+            <a href="{{ url_for('examiner_registration') }}">
+                <button>Examiner Registration</button>
+            </a>
+            <a href="{{ url_for('student_registration') }}">
+                <button>Student Registration</button>
+            </a>
+            <a href="{{ url_for('view_schools') }}">
+                <button>View Schools</button>
+            </a>
+            <a href="{{ url_for('view_students') }}">
+                <button>View Students</button>
+            </a>
+            <a href="{{ url_for('view_examiners') }}">
+                <button>View Examiners</button>
+            </a>
+            <a href="{{ url_for('update_marks') }}">
+                <button>Update Marks</button>
+            </a>
+            <a href="{{ url_for('view_marks') }}">
+                <button>View Marks</button>
+            </a>
+        </div>
+        <br>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <footer>
+        &copy; 2024 Board Exams Management System. All rights reserved.
+    </footer>
+</body>
+</html>

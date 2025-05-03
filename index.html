@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Table</title>
+
+    <script>
+        async function fetchStudents() {
+            try {
+                const response = await fetch('/get-students');
+                const data = await response.json();
+
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+
+                // Display the student data
+                const table = document.getElementById('student-table');
+                table.innerHTML = `
+                    <tr>
+                        <th>Name</th>
+                        <th>Roll</th>
+                    </tr>
+                `;
+                data.students.forEach(student => {
+                    const row = `
+                        <tr>
+                            <td>${student.name}</td>
+                            <td>${student.roll}</td>
+                        </tr>
+                    `;
+                    table.innerHTML += row;
+                });
+            } catch (error) {
+                alert('Failed to fetch students: ' + error.message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Student List</h1>
+    <button onclick="fetchStudents()" style="background-color: blue;">Get Students</button>
+    <table id="student-table" border="1">
+        <tr>
+            <th>Name</th>
+            <th>Roll</th>
+        </tr>
+    </table>
+</body>
+</html>

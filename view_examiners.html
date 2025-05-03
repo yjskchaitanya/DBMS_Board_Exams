@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Examiners</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 50px;
+            font-size: 36px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e1e1e1;
+        }
+
+        td {
+            color: #555;
+        }
+
+        .message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #999;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>View Examiners</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="message {% if category == 'success' %}success{% elif category == 'error' %}error{% endif %}">
+                    {% for category, message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Examiner ID</th>
+                        <th>Examiner Name</th>
+                        <th>Mentorship Status</th>
+                        <th>Mentorship Start Date</th>
+                        <th>Qualifications</th>
+                        <th>Contact Numbers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if examiners %}
+                        {% for examiner in examiners %}
+                            <tr>
+                                <td>{{ examiner['examiner_id'] }}</td>
+                                <td>{{ examiner['examiner_name'] }}</td>
+                                <td>{{ examiner['mentorship_status'] }}</td>
+                                <td>{{ examiner['mentorship_start_date'] }}</td>
+                                <td>
+                                    {% if examiner['qualifications'] %}
+                                        {{ examiner['qualifications'] }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if examiner['contact_no'] %}
+                                        {{ examiner['contact_no'] }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="no-data">No examiners available.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

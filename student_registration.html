@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"], input[type="date"], input[type="tel"], input[type="submit"], select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        .contact-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .contact-group input[type="tel"] {
+            width: 80%;
+        }
+
+        .contact-group button {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .contact-group button:hover {
+            background-color: #e04b29;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .contact-wrapper {
+            margin-top: 20px;
+        }
+
+        select option {
+            color: black;
+            background-color: white;
+        }
+
+        select {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Student Registration</h1>
+    <form action="{{ url_for('student_registration') }}" method="POST">
+        <div class="form-group">
+            <label for="student_roll_number">Student Roll Number</label>
+            <input type="text" id="student_roll_number" name="student_roll_number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="student_name">Student Name</label>
+            <input type="text" id="student_name" name="student_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+
+        <div class="form-group">
+            <label for="school_id">School</label>
+            <select id="school_id" name="school_id" required>
+                <option value="">Select School</option>
+                {% for school in schools %}
+                    <option value="{{ school[0] }}" {% if school[0] == school_id %}selected{% endif %}>
+                        {{ school[1] }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="contact-wrapper">
+            <label>Contact Numbers</label>
+            <div id="contact-container">
+                <div class="contact-group">
+                    <input type="tel" name="contact_no[]" placeholder="Enter contact number" required>
+                    <button type="button" onclick="addContact()">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Register Student</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function addContact() {
+        var contactContainer = document.getElementById('contact-container');
+        var newContactGroup = document.createElement('div');
+        newContactGroup.classList.add('contact-group');
+
+        var contactInput = document.createElement('input');
+        contactInput.type = 'tel';
+        contactInput.name = 'contact_no[]';
+        contactInput.placeholder = 'Enter contact number';
+        contactInput.required = true;
+
+        var removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.textContent = '–';
+        removeButton.onclick = function() {
+            contactContainer.removeChild(newContactGroup);
+        };
+
+        newContactGroup.appendChild(contactInput);
+        newContactGroup.appendChild(removeButton);
+
+        contactContainer.appendChild(newContactGroup);
+    }
+</script>
+
+</body>
+</html>

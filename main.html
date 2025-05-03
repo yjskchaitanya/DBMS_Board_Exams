@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board Exams Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #f8fafc, #dbeafe);
+            color: #333;
+            text-align: center;
+        }
+
+        header {
+            background-color: #1d4ed8;
+            color: white;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 30px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            background-color: #1e40af;
+            transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            background-color: #1c4f91;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Board Exams Management System
+    </header>
+    <div class="container">
+        <h2>Welcome to the Management System</h2>
+        <p>Select an option below to proceed:</p>
+        <div class="button-container">
+            <a href="{{ url_for('admin_signup') }}">
+                <button>Admin Signup</button>
+            </a>
+            <a href="{{ url_for('admin_login') }}">
+                <button>Admin Login</button>
+            </a>
+            <a href="{{ url_for('student_login') }}">
+                <button>Student Login</button>
+            </a>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 Board Exams Management System. All rights reserved.
+    </footer>
+</body>
+</html>
